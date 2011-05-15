@@ -11,36 +11,37 @@ package za.co.skycorp.lightning.view.elements.buttons
 	import za.co.skycorp.lightning.model.enum.SoundID;
 	import za.co.skycorp.lightning.model.vo.SoundVO;
 
-
-
 	/**
-	 * TODOM: rewrite this terrible awful class // 'M' for manguste
+	 * TODOM: rewrite this terrible awful class
 	 *
 	 * @author Chris Truter
 	 */
 	public class TimelineButton extends Sprite
 	{
-		private const OUT_LABEL:String = "_out_";
-		private const DOWN_LABEL:String = "_down_";
-		private const DISABLED_LABEL:String = "_disabled_";
-		private const SELECTED_LABEL:String = "_selected_";
-		private const OVER_LABEL:String = "_over";
-		// trunacted for compatability
+		// constants
+		private const LABEL_DISABLED:String = "_disabled_";
+		private const LABEL_DOWN:String = "_down_";
+		private const LABEL_OUT:String = "_out_";
+		private const LABEL_OVER:String = "_over";
+		private const LABEL_SELECTED:String = "_selected_";		
+		// public
 		public var asset:MovieClip;
 		public var sound:Signal;
-		protected var _selected:Boolean;
-		protected var _disabled:Boolean = false;
-		protected var _status:Boolean;
-		protected var _over:Boolean;
-		protected var _isSelectable:Boolean = false;
-		protected var _isDisableable:Boolean = false;
+		// protected
+		protected var _isSelectable:Boolean;
+		protected var _isSelected:Boolean;
+		protected var _isDisableable:Boolean;
+		protected var _isDisabled:Boolean;
 		protected var _onClick:Signal;
-		private var _outFrame:int;
-		private var _selectedFrame:int;
-		private var _hasDown:Boolean = false;
+		protected var _over:Boolean;
+		protected var _status:Boolean;
 		protected var _targetFrame:int;
+		// private
+		private var _hasDown:Boolean = false;
+		private var _outFrame:int;
 		private var _soundClickID:SoundID;
 		private var _soundOverID:SoundID;
+		private var _selectedFrame:int;
 
 		public function TimelineButton(graphic:MovieClip)
 		{
@@ -48,11 +49,8 @@ package za.co.skycorp.lightning.view.elements.buttons
 			soundClickID = SoundID.BUTTON_CLICK;
 			soundOverID = SoundID.BUTTON_ROLL_OVER;
 
-			// delegated for 1) JIT, 2) subclasses more flexible.
-			if (asset)
-				wrap();
-			else
-				throw(new Error("missing asset"));
+			if (asset) wrap();
+			else throw(new Error("missing asset"));
 		}
 
 		public function get soundClickID():SoundID
@@ -91,7 +89,7 @@ package za.co.skycorp.lightning.view.elements.buttons
 
 		public function get selected():Boolean
 		{
-			return _selected;
+			return _isSelected;
 		}
 
 		/**
@@ -99,19 +97,19 @@ package za.co.skycorp.lightning.view.elements.buttons
 		 */
 		public function set selected(newStatus:Boolean):void
 		{
-			if (_selected == newStatus)
+			if (_isSelected == newStatus)
 				return;
 
-			_selected = newStatus;
+			_isSelected = newStatus;
 
 			if (!_isSelectable)
 				return;
 
-			switch (_selected)
+			switch (_isSelected)
 			{
 				case true:
-					if (asset.currentLabel != SELECTED_LABEL)
-						asset.gotoAndPlay(SELECTED_LABEL);
+					if (asset.currentLabel != LABEL_SELECTED)
+						asset.gotoAndPlay(LABEL_SELECTED);
 					else
 						asset.gotoAndPlay(_selectedFrame);
 					break;
@@ -119,7 +117,7 @@ package za.co.skycorp.lightning.view.elements.buttons
 					if (_over)
 						playSelectedBackwards();
 					else
-						asset.gotoAndPlay(OUT_LABEL);
+						asset.gotoAndPlay(LABEL_OUT);
 					break;
 			}
 		}
@@ -144,7 +142,7 @@ package za.co.skycorp.lightning.view.elements.buttons
 		public function reset():void
 		{
 			status = _status;
-			selected = _selected;
+			selected = _isSelected;
 		}
 
 		protected function handleClick(e:MouseEvent):void
@@ -156,9 +154,9 @@ package za.co.skycorp.lightning.view.elements.buttons
 				sound.dispatch(SoundAction.PLAY, new SoundVO(soundClickID));
 
 			if (_isSelectable)
-				selected = !_selected;
+				selected = !_isSelected;
 
-			if (_selected)
+			if (_isSelected)
 				return;
 
 			if (_onClick)
@@ -170,11 +168,11 @@ package za.co.skycorp.lightning.view.elements.buttons
 		// ===============================================================
 		protected function handleDown(evt:MouseEvent):void
 		{
-			if (_selected)
+			if (_isSelected)
 				return;
 
 			if (_hasDown)
-				asset.gotoAndPlay(DOWN_LABEL);
+				asset.gotoAndPlay(LABEL_DOWN);
 		}
 
 		protected function handleOver(evt:MouseEvent):void
@@ -183,7 +181,7 @@ package za.co.skycorp.lightning.view.elements.buttons
 				removeEventListener(Event.ENTER_FRAME, handleScrubBack);
 
 			_over = true;
-			if (_selected)
+			if (_isSelected)
 				return;
 
 			if (sound)
@@ -195,9 +193,9 @@ package za.co.skycorp.lightning.view.elements.buttons
 		protected function handleOut(evt:MouseEvent):void
 		{
 			_over = false;
-			if (_selected)
+			if (_isSelected)
 				return;
-			asset.gotoAndPlay(OUT_LABEL);
+			asset.gotoAndPlay(LABEL_OUT);
 		}
 
 		protected function wrap():void
@@ -211,16 +209,16 @@ package za.co.skycorp.lightning.view.elements.buttons
 
 			for each (var s:FrameLabel in asset.currentLabels)
 			{
-				if (s.name == OUT_LABEL)
+				if (s.name == LABEL_OUT)
 					_outFrame = s.frame;
-				if (s.name == DOWN_LABEL)
+				if (s.name == LABEL_DOWN)
 					_hasDown = true;
-				if (s.name == SELECTED_LABEL)
+				if (s.name == LABEL_SELECTED)
 				{
 					_selectedFrame = s.frame;
 					_isSelectable = true;
 				}
-				if (s.name == DISABLED_LABEL)
+				if (s.name == LABEL_DISABLED)
 				{
 					_isDisableable = true;
 					asset.addFrameScript(s.frame - 3, asset.stop);
@@ -233,7 +231,7 @@ package za.co.skycorp.lightning.view.elements.buttons
 			buttonMode = true;
 
 			_status = true;
-			_selected = false;
+			_isSelected = false;
 
 			addEventListener(Event.ADDED_TO_STAGE, init);
 
@@ -245,17 +243,13 @@ package za.co.skycorp.lightning.view.elements.buttons
 
 		private function activate():void
 		{
-			_disabled = false;
-
-			// trace("activate", asset);
-
-			if (_disabled)
-				asset.gotoAndStop(OVER_LABEL);
-
-			mouseEnabled = true;
-			buttonMode = true;
+			_isDisabled = false;
+			if (_isDisableable && _isDisabled)
+				asset.gotoAndStop(LABEL_OVER);
 
 			alpha = 1;
+			mouseEnabled = true;
+			buttonMode = true;
 
 			addEventListener(MouseEvent.MOUSE_DOWN, handleDown);
 			addEventListener(MouseEvent.CLICK, handleClick);
@@ -265,12 +259,11 @@ package za.co.skycorp.lightning.view.elements.buttons
 
 		private function deactivate():void
 		{
-			_disabled = true;
+			_isDisabled = true;
 			if (_isDisableable)
-				asset.gotoAndStop(DISABLED_LABEL);
+				asset.gotoAndStop(LABEL_DISABLED);
 
 			alpha = .8;
-
 			mouseEnabled = false;
 			buttonMode = false;
 
@@ -286,9 +279,9 @@ package za.co.skycorp.lightning.view.elements.buttons
 			if (asset.currentFrame == _targetFrame)
 			{
 				removeEventListener(Event.ENTER_FRAME, handleScrubBack);
-				if (_targetFrame == _selectedFrame)
+				if (_targetFrame == _selectedFrame)	
 					asset.gotoAndStop(_outFrame - 1);
-				else
+				else 
 					asset.gotoAndStop(_targetFrame);
 			}
 		}

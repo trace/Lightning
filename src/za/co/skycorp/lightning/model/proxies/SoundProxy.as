@@ -18,9 +18,7 @@ package za.co.skycorp.lightning.model.proxies
 	 * TODO: unit tests
 	 *
 	 * Play Sfx and Loops.
-	 *
 	 * Cross fade loops.
-	 *
 	 * Adjust volumes of currently playing sounds.
 	 *
 	 * @author Chris Truter
