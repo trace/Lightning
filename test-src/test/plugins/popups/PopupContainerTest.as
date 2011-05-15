@@ -1,9 +1,6 @@
-package test.plugins.popups {
+package test.plugins.popups
+{
 	import asunit.framework.TestCase;
-	import flash.display.Sprite;
-	import org.robotlegs.adapters.SwiftSuspendersInjector;
-	import org.robotlegs.adapters.SwiftSuspendersReflector;
-	import org.robotlegs.base.MediatorMap;
 	import test.mockups.MockPopup;
 	import test.mockups.PopupID;
 	import za.co.skycorp.lightning.controller.signals.PopupSignal;
@@ -14,15 +11,16 @@ package test.plugins.popups {
 	import za.co.skycorp.lightning.view.interfaces.IPopup;
 	import za.co.skycorp.lightning.view.mediator.PopupContainerMediator;
 	import za.co.skycorp.lightning.view.mediator.PopupMediator;
-
-
-
-
+	import org.robotlegs.adapters.SwiftSuspendersInjector;
+	import org.robotlegs.adapters.SwiftSuspendersReflector;
+	import org.robotlegs.base.MediatorMap;
+	import flash.display.Sprite;
 
 	/**
 	 * @author Chris Truter
 	 */
-	public class PopupContainerTest extends TestCase {
+	public class PopupContainerTest extends TestCase
+	{
 		private var instance:PopupContainer;
 		private var contextView:Sprite;
 		private var map:MediatorMap;
@@ -34,11 +32,13 @@ package test.plugins.popups {
 		private var _hasOpened:Boolean;
 		private var _hasClosed:Boolean;
 
-		public function PopupContainerTest(method:String = null) {
+		public function PopupContainerTest(method:String = null)
+		{
 			super(method);
 		}
 
-		override protected function setUp():void {
+		override protected function setUp():void
+		{
 			super.setUp();
 
 			instance = new PopupContainer;
@@ -66,8 +66,12 @@ package test.plugins.popups {
 			_hasClosed = _hasOpened = false;
 		}
 
-		private function handleSignal(action:PopupAction, vo:PopupVO):void {
-			switch(action) {
+		private function handleSignal(action:PopupAction, vo:PopupVO):void
+		{
+			// kill FDT warning
+			vo;
+			switch(action)
+			{
 				case PopupAction.HAS_CLOSED:
 					_hasClosed = true;
 					break;
@@ -77,7 +81,8 @@ package test.plugins.popups {
 			}
 		}
 
-		override protected function tearDown():void {
+		override protected function tearDown():void
+		{
 			if (mediator.contextView)
 				mediator.preRemove();
 
@@ -102,11 +107,13 @@ package test.plugins.popups {
 			super.tearDown();
 		}
 
-		public function testInstantiated():void {
+		public function testInstantiated():void
+		{
 			assertTrue("Instance is PopupContainer", instance is PopupContainer);
 		}
 
-		public function testSignals():void {
+		public function testSignals():void
+		{
 			map.registerMediator(popup, mediator);
 			map.registerMediator(instance, mediator2);
 

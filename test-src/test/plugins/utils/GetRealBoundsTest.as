@@ -51,7 +51,7 @@ package test.plugins.utils {
 			var r2:Rectangle = getRealBounds(shape);
 			// TODO: fix this inaccuracy
 			r.x -= 5;
-			r.y -= 5 //- 1;
+			r.y -= 5; //- 1;
 			//r.height -= 1;
 			assertTrue("calculates circle bounds correctly.", r2.equals(r));
 		}
