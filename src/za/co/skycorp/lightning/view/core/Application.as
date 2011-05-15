@@ -2,10 +2,8 @@ package za.co.skycorp.lightning.view.core
 {
 	import net.hires.debug.Logger;
 	import net.hires.debug.Stats;
-
 	import org.osflash.signals.natives.NativeSignal;
 	import org.robotlegs.mvcs.Context;
-
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -19,8 +17,8 @@ package za.co.skycorp.lightning.view.core
 		protected var _context:Context;
 		protected var _keyDown:NativeSignal;
 		protected var _logger:Logger;
-		private var _stats:Stats;
 		private var _isDebugging:Boolean;
+		private var _stats:Stats;
 
 		public function Application()
 		{
@@ -30,6 +28,8 @@ package za.co.skycorp.lightning.view.core
 
 		protected function init(e:* = null):void
 		{
+			// remove FDT warning
+			e;
 			_keyDown ||= new NativeSignal(stage, KeyboardEvent.KEY_DOWN, KeyboardEvent);
 
 			if (_isDebugging)
@@ -42,8 +42,6 @@ package za.co.skycorp.lightning.view.core
 			{
 				_stats ||= new Stats;
 				_logger ||= new Logger;
-
-				_stats.visible = _logger.visible = false;
 
 				_stats.visible = _logger.visible = false;
 

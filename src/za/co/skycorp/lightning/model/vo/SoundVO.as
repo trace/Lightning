@@ -12,7 +12,7 @@ package za.co.skycorp.lightning.model.vo
 		public var volume:Number;
 		// unused
 		public var pan:Number;
-		public var offset:Number
+		public var offset:Number;
 
 		public function SoundVO(id:SoundID = null, volume:Number = 1)
 		{

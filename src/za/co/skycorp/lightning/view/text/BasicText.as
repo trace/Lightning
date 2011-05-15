@@ -4,7 +4,6 @@ package za.co.skycorp.lightning.view.text
 	import flash.text.TextFormat;
 	import za.co.skycorp.lightning.view.text.vo.BasicTextVO;
 
-
 	/**
 	 * @author Chris Truter
 	 */
@@ -12,7 +11,7 @@ package za.co.skycorp.lightning.view.text
 	{
 		private var _tf:TextFormat;
 
-		public function BasicText(params:Object = null)
+		public function BasicText(params:BasicTextVO/*Object*/ = null)
 		{
 			if (params == null)
 				params = new BasicTextVO("Arial");

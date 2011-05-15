@@ -1,12 +1,10 @@
 package za.co.skycorp.lightning.model.proxies
 {
-	import flash.utils.Dictionary;
-	import org.robotlegs.mvcs.Actor;
 	import za.co.skycorp.lightning.model.enum.StringEnum;
 	import za.co.skycorp.lightning.model.factories.PopupFactory;
 	import za.co.skycorp.lightning.view.interfaces.IPopup;
-
-
+	import org.robotlegs.mvcs.Actor;
+	import flash.utils.Dictionary;
 
 	/**
 	 * Simple facade for creating Popups. Caches on id, unless forced to created.
@@ -19,9 +17,9 @@ package za.co.skycorp.lightning.model.proxies
 	{
 		[Inject]
 		public var factory:PopupFactory;
-		private var _popups:Dictionary;
-
 		/* StringEnum => IPopup */
+		private var _popups:Dictionary;
+		
 		public function PopupProxy()
 		{
 			_popups = new Dictionary;
@@ -41,8 +39,9 @@ package za.co.skycorp.lightning.model.proxies
 		{
 			if (forceNew || !_popups[id])
 			{
-				_popups[id] = factory.createPopup(id);
-				_popups[id].id = id;
+				var popup:IPopup = factory.createPopup(id);
+				popup.id = id;
+				_popups[id] = popup;
 			}
 			return _popups[id];
 		}

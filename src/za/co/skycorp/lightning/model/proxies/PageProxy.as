@@ -1,10 +1,9 @@
 package za.co.skycorp.lightning.model.proxies
 {
-	import flash.utils.Dictionary;
 	import za.co.skycorp.lightning.model.enum.StringEnum;
 	import za.co.skycorp.lightning.model.factories.PageFactory;
 	import za.co.skycorp.lightning.view.interfaces.IPage;
-
+	import flash.utils.Dictionary;
 
 	/**
 	 * Simple facade for creating Pages.
@@ -61,8 +60,8 @@ package za.co.skycorp.lightning.model.proxies
 				var page:IPage = factory.createPage(id);
 				if (!page)
 					return null;
+				page.id = id;
 				_pages[id.value] = page;
-				_pages[id.value].id = id;
 			}
 			return _pages[id.value];
 		}

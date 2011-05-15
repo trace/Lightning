@@ -1,20 +1,18 @@
 package za.co.skycorp.lightning.model.proxies
 {
+	import za.co.skycorp.lightning.model.vo.SoundVO;
 	import aze.motion.easing.Cubic;
 	import aze.motion.easing.Linear;
 	import aze.motion.eaze;
-	import flash.events.Event;
-	import flash.media.Sound;
-	import flash.media.SoundChannel;
-	import flash.media.SoundTransform;
-	import org.robotlegs.mvcs.Actor;
 	import za.co.skycorp.lightning.model.enum.StringEnum;
 	import za.co.skycorp.lightning.model.factories.SoundFactory;
 	import za.co.skycorp.lightning.model.proxies.helpers.SoundAssistVO;
 	import za.co.skycorp.lightning.model.proxies.helpers.SoundDictionary;
-
-
-
+	import org.robotlegs.mvcs.Actor;
+	import flash.events.Event;
+	import flash.media.Sound;
+	import flash.media.SoundChannel;
+	import flash.media.SoundTransform;
 
 	/**
 	 * TODO: unit tests
@@ -31,13 +29,11 @@ package za.co.skycorp.lightning.model.proxies
 	{
 		[Inject]
 		public var factory:SoundFactory;
-		
 		private var _isMuted:Boolean = false;
 		private var _loop:Sound;
 		private var _loopChannel:SoundChannel;
 		private var _loopVolume:Number;
 		private var _sfxChannels:Vector.<SoundChannel>;
-		
 		// deprecate
 		private var _sfxVolume:Number;
 		private var _sounds:SoundDictionary;
@@ -102,7 +98,7 @@ package za.co.skycorp.lightning.model.proxies
 					return;
 				// safety if no sound device
 
-				vo.channels.push(sc)
+				vo.channels.push(sc);
 				_sfxChannels.push(sc);
 				sc.addEventListener(Event.SOUND_COMPLETE, handleSoundComplete);
 			}
@@ -204,12 +200,12 @@ package za.co.skycorp.lightning.model.proxies
 			var targetVO:Object = {volume:target};
 
 			eaze(vo)
-				.to(time, targetVO)
-				.easing(Linear.easeNone)
-				.onUpdate(setVolume, channel, vo);
+			.to(time, targetVO)
+			.easing(Linear.easeNone)
+			.onUpdate(setVolume, channel, vo);
 		}
 
-		private function setVolume(sc:SoundChannel, vo:Object):void
+		private function setVolume(sc:SoundChannel, vo:SoundVO):void
 		{
 			sc.soundTransform = new SoundTransform(vo.volume);
 		}

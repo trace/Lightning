@@ -15,17 +15,17 @@ package za.co.skycorp.lightning.view.text.vo
 		public var bold:Boolean;
 		public var colour:uint;
 		public var embeddedFont:Boolean;
-		public var fontName:Object;
+		public var fontName:String;
 		public var italic:Boolean;
 		public var multiline:Boolean;
 		public var wordWrap:Boolean;
 		public var leading:Object;
-		public var letterSpacing:Object
+		public var letterSpacing:Object;
 		public var selectable:Boolean;
 		public var size:Object;
 		public var underline:Boolean;
 
-		public function BasicTextVO(fontName:Object, size:Object = 10, colour:uint = 0x0, bold:Boolean = false, italic:Boolean = false, underline:Boolean = false, selectable:Boolean = false, align:String = null, antiAliasType:String = null, autoSize:String = null, embeddedFont:Boolean = false, leading:Object = null, letterSpacing:Object = null)
+		public function BasicTextVO(fontName:String, size:Object = 10, colour:uint = 0x0, bold:Boolean = false, italic:Boolean = false, underline:Boolean = false, selectable:Boolean = false, align:String = null, antiAliasType:String = null, autoSize:String = null, embeddedFont:Boolean = false, leading:Object = null, letterSpacing:Object = null)
 		{
 			this.fontName = fontName;
 			this.size = size;

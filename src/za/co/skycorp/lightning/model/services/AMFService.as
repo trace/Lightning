@@ -1,10 +1,8 @@
 package za.co.skycorp.lightning.model.services
 {
 	import net.hires.debug.Logger;
-
 	import org.robotlegs.mvcs.Actor;
 	import org.robotlegs.oil.async.Promise;
-
 	import flash.events.NetStatusEvent;
 	import flash.net.NetConnection;
 	import flash.net.Responder;
@@ -71,7 +69,8 @@ package za.co.skycorp.lightning.model.services
 
 		private function handleError(promise:Promise):void
 		{
-			Logger.debug(this + " ->handleError: " + promise.error.faultString);
+			Logger.debug(this + " ->handleError: " + promise.error);
+			// .faultString);
 		}
 
 		private function handleNetStatus(p:Promise):void

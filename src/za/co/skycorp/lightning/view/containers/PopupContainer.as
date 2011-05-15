@@ -1,10 +1,9 @@
 package za.co.skycorp.lightning.view.containers
 {
-	import flash.display.Sprite;
 	import za.co.skycorp.lightning.model.enum.StringEnum;
 	import za.co.skycorp.lightning.view.interfaces.IPopup;
 	import za.co.skycorp.lightning.view.interfaces.IResizable;
-
+	import flash.display.Sprite;
 
 	/**
 	 * FIX: support multiple popups - (Ben-Piet fixed me)
@@ -79,7 +78,6 @@ package za.co.skycorp.lightning.view.containers
 			if (idx < 0)
 				return false;
 			var popup:IPopup = _popups[idx];
-			var spr:Sprite = popup.display;
 			popup.close();
 
 			return true;
@@ -102,7 +100,7 @@ package za.co.skycorp.lightning.view.containers
 			{
 				for (var i:int = 0; i < _popups.length; i++)
 				{
-					var p:Sprite = _popups[i].display
+					var p:Sprite = _popups[i].display;
 					p.x = int((w - p.width) * .5);
 					p.y = int((h - p.height) * .5) - 100;
 				}
