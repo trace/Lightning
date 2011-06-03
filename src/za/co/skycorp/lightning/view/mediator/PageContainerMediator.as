@@ -15,12 +15,9 @@ package za.co.skycorp.lightning.view.mediator
 	 */
 	public class PageContainerMediator extends SignalMediator
 	{
-		[Inject]
-		public var view:PageContainer;
-		[Inject]
-		public var proxy:PageProxy;
-		[Inject]
-		public var signal:PageSignal;
+		[Inject] public var view:PageContainer;
+		[Inject] public var proxy:PageProxy;
+		[Inject] public var signal:PageSignal;
 
 		override public function onRegister():void
 		{
@@ -40,18 +37,12 @@ package za.co.skycorp.lightning.view.mediator
 			{
 				case PageAction.CLOSE:
 					view.closePage(vo.id);
-					break;
-				case PageAction.HAS_CLOSED:
 					proxy.id = StringEnum.BLANK;
-					view.removePage(vo.id);
-					break;
-				case PageAction.HAS_OPENED:
-					proxy.id = vo.id;
-					view.activatePage(vo.id);
 					break;
 				case PageAction.OPEN:
 					var page:IPage = proxy.getPage(vo.id);
 					view.openPage(page);
+					proxy.id = page.id;
 					break;
 			}
 		}

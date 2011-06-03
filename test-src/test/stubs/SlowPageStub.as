@@ -22,14 +22,11 @@ package test.stubs
 		override public function close():void
 		{
 			_closeCount++;
-			if (_id) clearTimeout(_id);
-			_id = setTimeout(super.close, 50);
 		}
 		
-		override public function deactivate():void
+		public function dispatchClosed():void
 		{
-			if (_id) clearTimeout(_id);
-			super.deactivate();
+			handleClosed();
 		}
 	}
 }

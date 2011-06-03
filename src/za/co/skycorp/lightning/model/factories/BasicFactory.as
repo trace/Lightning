@@ -21,6 +21,8 @@ package za.co.skycorp.lightning.model.factories
 
 		public function registerClass(id:StringEnum, _Class:Class):void
 		{
+			// TODO: this should not actually create it..
+			// use reflection dummy.
 			var temp:* = new _Class;
 			if (!(temp is _type))
 				throw(new Error("Can only register classes of type: " + _type));

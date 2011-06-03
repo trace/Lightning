@@ -10,7 +10,7 @@ package za.co.skycorp.lightning.view.containers
 	 */
 	public class PageContainer extends Sprite
 	{
-		private var _page:IPage;
+		protected var _page:IPage;
 		private var _queue:Vector.<IPage>;
 		private var _isClosing:Boolean;
 
@@ -38,7 +38,7 @@ package za.co.skycorp.lightning.view.containers
 		 * @param	id
 		 * @return	false if nothing performed, true otherwise
 		 */
-		public function activatePage(id:StringEnum):Boolean
+		private function activatePage(id:StringEnum):Boolean
 		{
 			if (!_page || id != _page.id)
 				return false;
@@ -71,11 +71,21 @@ package za.co.skycorp.lightning.view.containers
 			}
 			else
 			{
-				_page = newPage;
-				addChild(newPage.display);
-				newPage.open();
+				openPageFinally(newPage);
 				return true;
 			}
+		}
+		
+		/**
+		 * Actually do the opening..
+		 * @param	newPage
+		 */
+		protected function openPageFinally(newPage:IPage):void
+		{
+			_page = newPage;
+			addChild(newPage.display);
+			newPage.onOpened.addOnce(handlePageOpened);
+			newPage.open();
 		}
 
 		/**
@@ -90,6 +100,8 @@ package za.co.skycorp.lightning.view.containers
 				if (!_isClosing)
 				{
 					_isClosing = true;
+					_page.onClosed.addOnce(handlePageClosed);
+					_page.deactivate();
 					_page.close();
 				}
 				return true;
@@ -103,24 +115,39 @@ package za.co.skycorp.lightning.view.containers
 		 * @param	id
 		 * @return  false if nothing performed, true otherwise
 		 */
-		public function removePage(id:StringEnum):Boolean
+		private function removePage(id:StringEnum):Boolean
 		{
 			if (!_page || _page.id != id)
 				return false;
-
+				
 			_isClosing = false;
 
-			if ((_page.display.parent == this))
-			{
-				removeChild(_page.display);
-				_page.destroy();
-			}
-			_page = null;
+			removePageFinally();
 
 			if (_queue.length > 0)
 				openPage(_queue.shift());
 
 			return true;
+		}
+		
+		protected function removePageFinally():void
+		{
+			if ((_page.display.parent == this))
+			{
+				removeChild(_page.display);
+				//_page.destroy();
+			}
+			_page = null;
+		}
+		
+		protected function handlePageOpened():void
+		{
+			activatePage(page.id);
+		}
+		
+		private function handlePageClosed():void
+		{
+			removePage(page.id);
 		}
 	}
 }

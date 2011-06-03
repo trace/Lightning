@@ -15,8 +15,6 @@ package test.plugins.pages {
 		public var instance:PageContainer;
 		public var page:PageStub;
 		public var second:SlowPageStub;
-		public var signal:PageSignal;
-		public var mediator:MockMediator;
 		
 		public function PageContainerTest(method:String = null)
 		{
@@ -30,28 +28,19 @@ package test.plugins.pages {
 			instance = new PageContainer;
 			page = new PageStub;
 			second = new SlowPageStub;
-			signal = new PageSignal;
-			mediator = new MockMediator;
 			
 			page.id = PageID.TEST;
-			page.pageSignal = signal;
 			second.id = PageID.SLOW;
-			second.pageSignal = signal;
-			mediator.container = instance;
-			signal.add(mediator.handleSignal);
         }
 
         override protected function tearDown():void
 		{
 			super.tearDown();
 			
-			signal.removeAll();
-			signal = null;
+			page.destroy();
 			page.pageSignal = null;
 			page = null;
 			instance = null;
-			mediator.container = null;
-			mediator = null;
 			second.deactivate();
 			second.pageSignal = null;
 			second = null;
@@ -60,21 +49,6 @@ package test.plugins.pages {
 		public function testInstantiated():void
 		{
 			assertTrue("instance is PageContainer", instance is PageContainer);
-		}
-		
-		public function testActivatePage():void
-		{
-			assertFalse("cannot activate non-page", instance.activatePage(PageID.INVALID));
-			assertFalse("cannot activate non-page", instance.activatePage(PageID.TEST));
-			
-			instance.openPage(page);
-			assertTrue("can activate open page", instance.activatePage(PageID.TEST));
-			assertTrue("can activate open page", page.active);
-			
-			instance.openPage(second);
-			instance.openPage(page);
-			instance.activatePage(PageID.SLOW);
-			assertFalse("immediately close if queue", second.active);
 		}
 		
 		public function testOpenPage():void
@@ -112,15 +86,7 @@ package test.plugins.pages {
 		
 		public function testRemovePage():void
 		{
-			assertFalse("does nothing if no page", instance.removePage(PageID.TEST));
 			instance.openPage(page);
-			assertFalse("does nothing if id does not match", instance.removePage(PageID.INVALID));
-			
-			assertTrue("removes child if still valid", instance.removePage(PageID.TEST));
-			assertFalse("destroys child if still valid", page.active);
-			
-			instance.openPage(page);
-			instance.activatePage(PageID.TEST);
 			
 			var spr:Sprite = new Sprite;
 			spr.addChild(page);
@@ -132,29 +98,8 @@ package test.plugins.pages {
 			assertFalse("ensure page not still open", page.visible);
 			instance.openPage(second);
 			instance.openPage(page);
-			instance.removePage(PageID.SLOW);
+			second.dispatchClosed();
 			assertTrue("if queue, unshift and open next element", page.visible);
-		}
-	}
-}
-import za.co.skycorp.lightning.model.enum.PageAction;
-import za.co.skycorp.lightning.model.vo.PageVO;
-import za.co.skycorp.lightning.view.containers.PageContainer;
-
-class MockMediator
-{
-	public var container:PageContainer;
-	
-	public function handleSignal(action:PageAction, vo:PageVO):void
-	{
-		switch(action)
-		{
-			case PageAction.HAS_CLOSED:
-				container.removePage(vo.id);
-				break;
-			case PageAction.HAS_OPENED:
-				container.activatePage(vo.id);
-				break;
 		}
 	}
 }

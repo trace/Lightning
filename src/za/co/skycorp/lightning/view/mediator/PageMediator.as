@@ -5,21 +5,18 @@ package za.co.skycorp.lightning.view.mediator
 	import za.co.skycorp.lightning.controller.signals.SoundSignal;
 	import za.co.skycorp.lightning.view.interfaces.IPage;
 
-
 	/**
 	 * @author Chris Truter
 	 */
 	public class PageMediator extends SignalMediator
 	{
+		[Inject] public var signal:PageSignal;
+		[Inject] public var sound:SoundSignal;
+		
 		protected function get page():IPage
 		{
 			return viewComponent as IPage;
 		}
-
-		[Inject]
-		public var signal:PageSignal;
-		[Inject]
-		public var sound:SoundSignal;
 
 		override public function onRegister():void
 		{

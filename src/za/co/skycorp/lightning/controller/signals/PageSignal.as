@@ -25,15 +25,5 @@ package za.co.skycorp.lightning.controller.signals
 		{
 			dispatch(PageAction.OPEN, new PageVO(id));
 		}
-
-		public function hasClosed(id:StringEnum):void
-		{
-			dispatch(PageAction.HAS_CLOSED, new PageVO(id));
-		}
-
-		public function hasOpened(id:StringEnum):void
-		{
-			dispatch(PageAction.HAS_OPENED, new PageVO(id));
-		}
 	}
 }

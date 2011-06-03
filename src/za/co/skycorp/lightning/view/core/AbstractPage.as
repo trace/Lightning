@@ -1,11 +1,12 @@
 package za.co.skycorp.lightning.view.core
 {
 	import flash.display.Sprite;
+	import org.osflash.signals.ISignal;
+	import org.osflash.signals.Signal;
 	import za.co.skycorp.lightning.controller.signals.PageSignal;
 	import za.co.skycorp.lightning.controller.signals.SoundSignal;
 	import za.co.skycorp.lightning.model.enum.StringEnum;
 	import za.co.skycorp.lightning.view.interfaces.IPage;
-
 
 	/**
 	 * @author Chris Truter
@@ -13,9 +14,16 @@ package za.co.skycorp.lightning.view.core
 	public class AbstractPage extends Sprite implements IPage
 	{
 		private var _id:StringEnum;
+		private var _onOpened:Signal = new Signal;
+		private var _onClosed:Signal  = new Signal;
 		private var _pageSignal:PageSignal;
 		private var _sound:SoundSignal;
 
+		public function AbstractPage()
+		{
+			deactivate();
+		}
+		
 		public function get display():Sprite
 		{
 			return this;
@@ -30,6 +38,10 @@ package za.co.skycorp.lightning.view.core
 		{
 			_id = value;
 		}
+		
+		public function get onOpened():ISignal { return _onOpened; };
+		
+		public function get onClosed():ISignal { return _onClosed; }; // accesssor to exist in Interface..
 
 		public function get pageSignal():PageSignal
 		{
@@ -66,8 +78,12 @@ package za.co.skycorp.lightning.view.core
 		public function destroy():void
 		{
 			deactivate();
+			_onOpened = null;
+			_onClosed = null;
 			if (parent)
 				parent.removeChild(this);
+			while (numChildren > 0)
+				removeChildAt(numChildren - 1);
 		}
 
 		/** OPEN / CLOSE **/
@@ -86,12 +102,12 @@ package za.co.skycorp.lightning.view.core
 		/** Utility **/
 		protected function handleOpened():void
 		{
-			if (_pageSignal) _pageSignal.hasOpened(id);
+			_onOpened.dispatch();
 		}
 
 		protected function handleClosed():void
 		{
-			if (_pageSignal) _pageSignal.hasClosed(id);
+			_onClosed.dispatch();
 		}
 	}
 }
