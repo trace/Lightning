@@ -1,13 +1,11 @@
 package test.plugins.pages {
 	import asunit.framework.TestCase;
 	import flash.display.Sprite;
-	import test.mockups.MockPage;
-	import test.mockups.MockSlowPage;
-	import test.mockups.PageID;
+	import test.stubs.PageID;
+	import test.stubs.PageStub;
+	import test.stubs.SlowPageStub;
 	import za.co.skycorp.lightning.controller.signals.PageSignal;
 	import za.co.skycorp.lightning.view.containers.PageContainer;
-
-
 
 	/**
 	 * @author Chris Truter
@@ -15,8 +13,8 @@ package test.plugins.pages {
 	public class PageContainerTest extends TestCase
 	{
 		public var instance:PageContainer;
-		public var page:MockPage;
-		public var second:MockSlowPage;
+		public var page:PageStub;
+		public var second:SlowPageStub;
 		public var signal:PageSignal;
 		public var mediator:MockMediator;
 		
@@ -30,8 +28,8 @@ package test.plugins.pages {
             super.setUp();
 			
 			instance = new PageContainer;
-			page = new MockPage;
-			second = new MockSlowPage;
+			page = new PageStub;
+			second = new SlowPageStub;
 			signal = new PageSignal;
 			mediator = new MockMediator;
 			

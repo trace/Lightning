@@ -1,7 +1,7 @@
 package test.plugins.pages {
 	import asunit.framework.TestCase;
-	import test.mockups.MockPageFactory;
-	import test.mockups.PageID;
+	import test.stubs.PageID;
+	import test.stubs.PageStub;
 	import za.co.skycorp.lightning.model.enum.StringEnum;
 	import za.co.skycorp.lightning.model.factories.PageFactory;
 	import za.co.skycorp.lightning.model.proxies.PageProxy;
@@ -24,7 +24,9 @@ package test.plugins.pages {
 		{
             super.setUp();
 			instance = new PageProxy;
-			instance.factory = new MockPageFactory;
+			var factory:PageFactory = new PageFactory;
+			factory.registerClass(PageID.TEST, PageStub);
+			instance.factory = factory;
         }
 
         override protected function tearDown():void

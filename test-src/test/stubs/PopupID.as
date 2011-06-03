@@ -1,4 +1,4 @@
-package test.mockups {
+package test.stubs {
 	import za.co.skycorp.lightning.model.enum.StringEnum;
 	/**
 	 * @author Chris Truter

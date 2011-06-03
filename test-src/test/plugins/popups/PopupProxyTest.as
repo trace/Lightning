@@ -1,7 +1,7 @@
 package test.plugins.popups {
 	import asunit.framework.TestCase;
-	import test.mockups.MockPopupFactory;
-	import test.mockups.PopupID;
+	import test.stubs.PopupFactoryStub;
+	import test.stubs.PopupID;
 	import za.co.skycorp.lightning.model.factories.PopupFactory;
 	import za.co.skycorp.lightning.model.proxies.PopupProxy;
 	import za.co.skycorp.lightning.view.interfaces.IPopup;
@@ -23,7 +23,7 @@ package test.plugins.popups {
 		{
             super.setUp();
 			instance = new PopupProxy;
-			instance.factory = new MockPopupFactory;
+			instance.factory = new PopupFactoryStub;
         }
 
         override protected function tearDown():void

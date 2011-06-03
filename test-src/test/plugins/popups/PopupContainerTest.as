@@ -1,8 +1,12 @@
 package test.plugins.popups
 {
 	import asunit.framework.TestCase;
-	import test.mockups.MockPopup;
-	import test.mockups.PopupID;
+	import flash.display.Sprite;
+	import org.robotlegs.adapters.SwiftSuspendersInjector;
+	import org.robotlegs.adapters.SwiftSuspendersReflector;
+	import org.robotlegs.base.MediatorMap;
+	import test.stubs.PopupID;
+	import test.stubs.PopupStub;
 	import za.co.skycorp.lightning.controller.signals.PopupSignal;
 	import za.co.skycorp.lightning.model.enum.PopupAction;
 	import za.co.skycorp.lightning.model.proxies.PopupProxy;
@@ -11,10 +15,6 @@ package test.plugins.popups
 	import za.co.skycorp.lightning.view.interfaces.IPopup;
 	import za.co.skycorp.lightning.view.mediator.PopupContainerMediator;
 	import za.co.skycorp.lightning.view.mediator.PopupMediator;
-	import org.robotlegs.adapters.SwiftSuspendersInjector;
-	import org.robotlegs.adapters.SwiftSuspendersReflector;
-	import org.robotlegs.base.MediatorMap;
-	import flash.display.Sprite;
 
 	/**
 	 * @author Chris Truter
@@ -26,11 +26,11 @@ package test.plugins.popups
 		private var map:MediatorMap;
 		private var mediator:PopupMediator;
 		private var mediator2:PopupContainerMediator;
-		private var popup:MockPopup;
 		private var proxy:PopupProxy;
 		private var signal:PopupSignal;
 		private var _hasOpened:Boolean;
 		private var _hasClosed:Boolean;
+		private var popup:PopupStub;
 
 		public function PopupContainerTest(method:String = null)
 		{
@@ -43,7 +43,7 @@ package test.plugins.popups
 
 			instance = new PopupContainer;
 
-			popup = new MockPopup;
+			popup = new PopupStub;
 			proxy = new PopupProxy;
 			mediator = new PopupMediator;
 			mediator2 = new PopupContainerMediator;
@@ -60,7 +60,7 @@ package test.plugins.popups
 			contextView.addChild(instance);
 			proxy.cache(PopupID.TEST, popup);
 			// test factory cache
-			map.mapView(MockPopup, PopupMediator, IPopup);
+			map.mapView(PopupStub, PopupMediator, IPopup);
 			map.mapView(PopupContainer, PopupContainerMediator, IPopup);
 
 			_hasClosed = _hasOpened = false;

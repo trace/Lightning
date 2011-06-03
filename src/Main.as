@@ -3,7 +3,6 @@ package
 	import flash.display.Sprite;
 	import za.co.skycorp.lightning.view.core.Application;
 
-
 	public class Main extends Application
 	{
 		public function Main()

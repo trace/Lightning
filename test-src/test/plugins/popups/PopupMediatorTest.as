@@ -5,20 +5,17 @@ package test.plugins.popups {
 	import org.robotlegs.adapters.SwiftSuspendersReflector;
 	import org.robotlegs.base.MediatorMap;
 	import org.robotlegs.mvcs.Mediator;
-	import test.mockups.MockPopup;
+	import test.stubs.PopupStub;
 	import za.co.skycorp.lightning.controller.signals.PopupSignal;
 	import za.co.skycorp.lightning.view.interfaces.IPopup;
 	import za.co.skycorp.lightning.view.mediator.PopupMediator;
-
-
-
 
 	/**
 	 * @author Chris Truter
 	 */
 	public class PopupMediatorTest extends TestCase
 	{
-		private var popup:MockPopup;
+		private var popup:PopupStub;
 		private var mediator:PopupMediator;
 		private var map:MediatorMap;
 		
@@ -31,12 +28,12 @@ package test.plugins.popups {
 		{
             super.setUp();
 			
-			popup = new MockPopup;
+			popup = new PopupStub;
 			mediator = new PopupMediator;
 			map = new MediatorMap(new Sprite, new SwiftSuspendersInjector, new SwiftSuspendersReflector);
 			
 			mediator.signal = new PopupSignal;
-			map.mapView(MockPopup, PopupMediator, IPopup);
+			map.mapView(PopupStub, PopupMediator, IPopup);
         }
 
         override protected function tearDown():void

@@ -1,10 +1,11 @@
-package test.mockups {
+package test.stubs
+{
 	import za.co.skycorp.lightning.view.core.AbstractPage;
 	import za.co.skycorp.lightning.view.interfaces.IPage;
 	/**
 	 * @author Chris Truter
 	 */
-	public class MockPage extends AbstractPage implements IPage
+	public class PageStub extends AbstractPage implements IPage
 	{
 		public var active:Boolean;
 		

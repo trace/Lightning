@@ -1,9 +1,9 @@
 package
 {
 	import asunit.framework.TestSuite;
-
 	import test.plugins.pages.PageContainerTest;
 	import test.plugins.pages.PageProxyTest;
+	import test.plugins.pages.SlidingPageContainerTest;
 	import test.plugins.popups.PopupContainerTest;
 	import test.plugins.popups.PopupMediatorTest;
 	import test.plugins.popups.PopupProxyTest;
@@ -21,6 +21,7 @@ package
 			// pages
 			addTest(new PageProxyTest);
 			addTest(new PageContainerTest);
+			addTest(new SlidingPageContainerTest);
 
 			// popups
 			addTest(new PopupProxyTest);

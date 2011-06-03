@@ -1,4 +1,5 @@
-package test.mockups {
+package test.stubs
+{
 	import flash.utils.clearTimeout;
 	import flash.utils.setTimeout;
 	import za.co.skycorp.lightning.view.interfaces.IPage;
@@ -8,7 +9,7 @@ package test.mockups {
 	 *
 	 * @author Chris Truter
 	 */
-	public class MockSlowPage extends MockPage implements IPage
+	public class SlowPageStub extends PageStub implements IPage
 	{
 		private var _id:uint;
 		private var _closeCount:int = 0;
