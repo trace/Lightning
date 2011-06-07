@@ -8,6 +8,7 @@ package za.co.skycorp.lightning.view.containers
 	import za.co.skycorp.lightning.view.interfaces.IPage;
 	/**
 	 * @author Chris Truter
+	 * date created 03/06/2011
 	 */
 	public class SlidingPageContainer extends PageContainer
 	{
