@@ -12,9 +12,11 @@
 	<property file="${basedir}/build/build.properties" />
 
 	<!-- Setup Flex Ant Resources -->
-	<!--property name="FLEX_HOME" location="${flex.sdk}" /-->
-	<property name="FLEX_HOME" location="${env.FLEX_HOME}" />
-	<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+	<property name="FLEX_HOME" location="${flex.sdk}" />
+	<!-- <property name="FLEX_HOME" location="${env.FLEX_HOME}" /> -->
+	
+	<taskdef resource="flexTasks.tasks" classpath="C:/Users/palentine/sprouts/1.1/cache/flex4/4.1.0.16076/ant/lib/flexTasks.jar" />
+	<!-- <taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" /> -->
 	
 	<!-- ============================== -->
 	<!--  Clean and Init Targets -->
