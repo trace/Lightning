@@ -1,5 +1,7 @@
 <project name="lightning" basedir="../" default="compile">
 
+	<!-- QUICK ADAPTION OF Adobe Core Lib BUILD SCRIPT -->
+	
 	<!-- ============================== -->
 	<!--  Configuration -->
 	<!-- ============================== -->
