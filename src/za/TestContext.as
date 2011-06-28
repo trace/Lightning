@@ -3,6 +3,7 @@ package za
 	import flash.display.DisplayObjectContainer;
 	import org.osflash.signals.Signal;
 	import org.robotlegs.mvcs.SignalContext;
+	import test.stubs.ColouredPage;
 	import za.co.skycorp.lightning.controller.InitPagePluginCommand;
 	import za.co.skycorp.lightning.controller.signals.PageSignal;
 	import za.co.skycorp.lightning.model.enum.StringEnum;

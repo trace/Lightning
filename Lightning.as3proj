@@ -15,6 +15,7 @@
   <classpaths>
     <class path="src" />
     <class path="test-src" />
+    <class path="lib" />
   </classpaths>
   <!-- Build options -->
   <build>

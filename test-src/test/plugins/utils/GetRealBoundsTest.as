@@ -44,15 +44,16 @@ package test.plugins.utils {
 		public function testCircle():void
 		{
 			var shape:Shape = new Shape;
-			var r:Rectangle = new Rectangle(10, 10, 10, 10);
+			var r:Rectangle = new Rectangle(-5, -5, 10, 10);
 			shape.graphics.beginFill(0x0);
-			shape.graphics.drawCircle(r.x, r.y, 5);
+			shape.graphics.drawCircle(0, 0, 5);
 			shape.graphics.endFill();
 			var r2:Rectangle = getRealBounds(shape);
 			// TODO: fix this inaccuracy
-			r.x -= 5;
-			r.y -= 5; //- 1;
 			//r.height -= 1;
+			
+			trace(r2, r);
+			
 			assertTrue("calculates circle bounds correctly.", r2.equals(r));
 		}
 		

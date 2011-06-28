@@ -1,4 +1,4 @@
-package test.plugins.services {
+package test.models.services {
 	import asunit.framework.TestCase;
 	import za.co.skycorp.lightning.model.services.AMFService;
 

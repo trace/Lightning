@@ -1,4 +1,4 @@
-package
+package test.stubs
 {
 	import flash.display.Shape;
 	import za.co.skycorp.lightning.view.core.AbstractPage;
