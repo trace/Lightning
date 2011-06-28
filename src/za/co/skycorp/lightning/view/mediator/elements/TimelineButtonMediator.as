@@ -5,6 +5,8 @@ package za.co.skycorp.lightning.view.mediator.elements
 	import za.co.skycorp.lightning.view.elements.buttons.TimelineButton;
 
 	/**
+	 * Optional, this is only used to connect to sound pipeline.
+	 *
 	 * @author Chris Truter
 	 */
 	public class TimelineButtonMediator extends SignalMediator
