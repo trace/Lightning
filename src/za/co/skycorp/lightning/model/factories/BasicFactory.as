@@ -33,7 +33,7 @@ package za.co.skycorp.lightning.model.factories
 
 		public function createInstance(id:StringEnum):*
 		{
-			if (_dict[id])
+			if (_dict && _dict[id])
 				return new _dict[id];
 			else
 				return null;

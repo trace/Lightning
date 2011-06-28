@@ -7,7 +7,6 @@ package za.co.skycorp.lightning.controller
 	import za.co.skycorp.lightning.view.containers.PageContainer;
 	import za.co.skycorp.lightning.view.mediator.PageContainerMediator;
 
-
 	/**
 	 * @author Chris Truter
 	 */

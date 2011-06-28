@@ -8,7 +8,7 @@ package za.co.skycorp.lightning.utils
 	public function safelyRemoveChild(child:DisplayObject):Boolean
 	{
 		if (child && child.parent)
-			child.parent.removeChild(child) != null;
+			return child.parent.removeChild(child) != null;
 		return false;
 	}
 }

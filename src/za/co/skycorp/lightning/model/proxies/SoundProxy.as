@@ -5,9 +5,9 @@ package za.co.skycorp.lightning.model.proxies
 	import za.co.skycorp.lightning.interfaces.IDestroyable;
 	import za.co.skycorp.lightning.model.enum.StringEnum;
 	import za.co.skycorp.lightning.model.factories.SoundFactory;
-	import za.co.skycorp.lightning.model.proxies.helpers.SoundDictionary;
 	import za.co.skycorp.lightning.model.proxies.sound.FadeVolumeStrategy;
 	import za.co.skycorp.lightning.model.proxies.sound.IFadeVolumeStrategy;
+	import za.co.skycorp.lightning.model.proxies.sound.SoundList;
 	import za.co.skycorp.lightning.model.proxies.sound.SoundLoop;
 
 	/**
@@ -32,7 +32,7 @@ package za.co.skycorp.lightning.model.proxies
 		private var _fadeStrategy:IFadeVolumeStrategy;
 		// data
 		private var _loop:SoundLoop;
-		private var _sfxList:SoundDictionary;
+		private var _sfxList:SoundList;
 		private var _sfxVolume:Number;
 		
 		public function SoundProxy()
@@ -41,7 +41,7 @@ package za.co.skycorp.lightning.model.proxies
 			_loop.volume = DEFAULT_SFX_VOLUME;
 			_sfxVolume = DEFAULT_LOOP_VOLUME;
 			
-			_sfxList = new SoundDictionary;
+			_sfxList = new SoundList;
 			_fadeStrategy = new FadeVolumeStrategy;
 			_loop.fadeStrategy = _fadeStrategy;
 		}

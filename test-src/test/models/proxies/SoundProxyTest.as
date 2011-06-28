@@ -9,6 +9,10 @@ package test.models.proxies
 	import za.co.skycorp.lightning.model.proxies.SoundProxy;
 	
 	/**
+	 * TODO rename helper classes
+	 * TODO async tests with actual sound playing
+	 * TODO protection against
+	 *
 	 * @author Chris Truter
 	 * date created 27/06/2011
 	 */
@@ -29,7 +33,7 @@ package test.models.proxies
 			soundProxy = new SoundProxy;
 			soundProxy.factory = new SoundFactory;
         }
-
+		
         override protected function tearDown():void
 		{
 			super.tearDown();

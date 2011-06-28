@@ -1,10 +1,12 @@
-package za.co.skycorp.lightning.model.proxies.helpers
+package za.co.skycorp.lightning.model.proxies.sound
 {
 	import flash.events.Event;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 
 	/**
+	 * Container for a sound, and all its currently playing channels.
+	 *
 	 * @author palentine
 	 */
 	public class SoundAssistVO

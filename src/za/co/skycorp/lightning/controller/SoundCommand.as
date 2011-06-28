@@ -5,19 +5,15 @@ package za.co.skycorp.lightning.controller
 	import za.co.skycorp.lightning.model.proxies.SoundProxy;
 	import za.co.skycorp.lightning.model.vo.SoundVO;
 
-
 	/**
 	 * @author Chris Truter
 	 */
 	public class SoundCommand extends SignalCommand
 	{
-		[Inject]
-		public var action:SoundAction;
-		[Inject]
-		public var vo:SoundVO;
-		[Inject]
-		public var proxy:SoundProxy;
-
+		[Inject] public var action:SoundAction;
+		[Inject] public var vo:SoundVO;
+		[Inject] public var proxy:SoundProxy;
+		
 		override public function execute():void
 		{
 			switch(action)

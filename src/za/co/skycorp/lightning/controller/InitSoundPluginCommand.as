@@ -5,7 +5,6 @@ package za.co.skycorp.lightning.controller
 	import za.co.skycorp.lightning.model.factories.SoundFactory;
 	import za.co.skycorp.lightning.model.proxies.SoundProxy;
 
-
 	/**
 	 * @author Chris Truter
 	 */

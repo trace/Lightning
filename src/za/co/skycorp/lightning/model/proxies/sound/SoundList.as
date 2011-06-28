@@ -1,4 +1,4 @@
-package za.co.skycorp.lightning.model.proxies.helpers
+package za.co.skycorp.lightning.model.proxies.sound
 {
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
@@ -13,7 +13,7 @@ package za.co.skycorp.lightning.model.proxies.helpers
 	 *
 	 * @author palentine
 	 */
-	public class SoundDictionary implements IDestroyable
+	public class SoundList implements IDestroyable
 	{
 		public var factory:SoundFactory;
 		

@@ -7,7 +7,6 @@ package za.co.skycorp.lightning.controller
 	import za.co.skycorp.lightning.view.containers.PopupContainer;
 	import za.co.skycorp.lightning.view.mediator.PopupContainerMediator;
 
-
 	/**
 	 * @author Chris Truter
 	 */

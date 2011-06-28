@@ -12,7 +12,7 @@ package za.co.skycorp.lightning.utils
 		 */
 		public static function validateNonempty(str:String):Boolean
 		{
-			return str && str.length > 0;
+			return str && stripWhitespace(str).length > 0;
 		}
 
 		public static function validatePostalCode(str:String):Boolean
