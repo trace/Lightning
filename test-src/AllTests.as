@@ -1,6 +1,7 @@
 package
 {
 	import asunit.framework.TestSuite;
+	import test.models.proxies.SoundProxyTest;
 	import test.plugins.pages.PageContainerTest;
 	import test.plugins.pages.PageProxyTest;
 	import test.plugins.pages.SlidingPageContainerTest;
@@ -30,6 +31,9 @@ package
 
 			// addTest(new GetRealBoundsTest);
 			addTest(new AMFServiceTest);
+			
+			// proxies
+			addTest(new SoundProxyTest);
 		}
 	}
 }

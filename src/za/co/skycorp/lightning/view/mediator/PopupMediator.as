@@ -23,9 +23,9 @@ package za.co.skycorp.lightning.view.mediator
 		
 		override public function onRemove():void
 		{
-			popup.popupSignal =
-			popup.sound =
-			signal =
+			popup.popupSignal = null;
+			popup.sound = null;
+			signal = null;
 			sound = null;
 		}
 	}

@@ -1,13 +1,14 @@
 package za.co.skycorp.lightning.model.factories
 {
 	import flash.utils.Dictionary;
+	import za.co.skycorp.lightning.interfaces.IDestroyable;
 	import za.co.skycorp.lightning.model.enum.StringEnum;
 
 
 	/**
 	 * @author Chris Truter
 	 */
-	public class BasicFactory
+	public class BasicFactory implements IDestroyable
 	{
 		protected var _type:Class;
 		protected var _dict:Dictionary;
@@ -36,6 +37,12 @@ package za.co.skycorp.lightning.model.factories
 				return new _dict[id];
 			else
 				return null;
+		}
+		
+		public function destroy():void
+		{
+			_dict = null;
+			_type = null;
 		}
 	}
 }

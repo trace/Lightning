@@ -59,7 +59,6 @@ package test.plugins.pages {
 		{
 			var firstPage:IPage = instance.getPage(PageID.TEST);
 			var secondPage:IPage = instance.getPage(PageID.TEST);
-			trace(firstPage.pageSignal);
 			assertEquals("instances caches popups", firstPage, secondPage);
 		}
 		

@@ -4,7 +4,6 @@ package test.plugins.pages {
 	import test.stubs.PageID;
 	import test.stubs.PageStub;
 	import test.stubs.SlowPageStub;
-	import za.co.skycorp.lightning.controller.signals.PageSignal;
 	import za.co.skycorp.lightning.view.containers.PageContainer;
 
 	/**
@@ -28,7 +27,6 @@ package test.plugins.pages {
 			instance = new PageContainer;
 			page = new PageStub;
 			second = new SlowPageStub;
-			
 			page.id = PageID.TEST;
 			second.id = PageID.SLOW;
         }
@@ -37,10 +35,10 @@ package test.plugins.pages {
 		{
 			super.tearDown();
 			
+			instance = null;
 			page.destroy();
 			page.pageSignal = null;
 			page = null;
-			instance = null;
 			second.deactivate();
 			second.pageSignal = null;
 			second = null;
@@ -53,6 +51,7 @@ package test.plugins.pages {
 		
 		public function testOpenPage():void
 		{
+			
 			assertNull("no page inside to start", instance.page);
 			
 			assertTrue("page opens immediately if nothing else around", instance.openPage(page));
@@ -65,6 +64,7 @@ package test.plugins.pages {
 			assertFalse("closes current page", page.visible);
 			
 			assertEquals("closes current page only once", 0, second.closeCount);
+			assertEquals("closes current page only once", 1, page.closeCount);
 			
 			assertEquals("no queue yet", 0, instance.queueLength);
 			instance.openPage(page);

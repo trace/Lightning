@@ -1,7 +1,5 @@
 package test.stubs
 {
-	import flash.utils.clearTimeout;
-	import flash.utils.setTimeout;
 	import za.co.skycorp.lightning.view.interfaces.IPage;
 
 	/**
@@ -11,22 +9,9 @@ package test.stubs
 	 */
 	public class SlowPageStub extends PageStub implements IPage
 	{
-		private var _id:uint;
-		private var _closeCount:int = 0;
-		
-		public function get closeCount():int
-		{
-			return _closeCount;
-		}
-		
 		override public function close():void
 		{
 			_closeCount++;
-		}
-		
-		public function dispatchClosed():void
-		{
-			handleClosed();
 		}
 	}
 }
