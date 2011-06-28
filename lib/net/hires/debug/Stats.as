@@ -1,19 +1,22 @@
 /**
  * Hi-ReS! Stats
- * 
+ *
  * Released under MIT license:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * How to use:
- * 
+ *
  *	addChild( new Stats() );
- * 
+ *
  * version log:
+ *
+ *
+ * 	11.06.28		?		crisptrutsky	+ Stop running when removed from stage, to avoid null pointer errors.
  *
  *	09.02.21		2.0		Mr.doob			+ Removed Player version, until I know if it's really needed.
  *											+ Added MAX value (shows Max memory used, useful to spot memory leaks)
  *											+ Reworked text system / no memory leak (original reason unknown)
- *											+ Simplified				
+ *											+ Simplified
  *	09.02.07		1.5		Mr.doob			+ onRemovedFromStage() (thx huihuicn.xu)
  *	08.12.14		1.4		Mr.doob			+ Code optimisations and version info on MOUSE_OVER
  *	08.07.12		1.3		Mr.doob			+ Some speed and code optimisations
@@ -93,6 +96,26 @@ package net.hires.debug
 
 			rectangle = new Rectangle(0, 0, 1, graph.height);
 
+			addEventListener(MouseEvent.CLICK, onClick);
+			addEventListener(Event.ENTER_FRAME, update);
+			
+			addEventListener(Event.REMOVED_FROM_STAGE, disable);
+		}
+		
+		private function disable(e:Event):void
+		{
+			removeEventListener(Event.REMOVED_FROM_STAGE, disable);
+			addEventListener(Event.ADDED_TO_STAGE, enable);
+			
+			removeEventListener(MouseEvent.CLICK, onClick);
+			removeEventListener(Event.ENTER_FRAME, update);
+		}
+		
+		private function enable(e:Event):void
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, enable);
+			addEventListener(Event.REMOVED_FROM_STAGE, disable);
+			
 			addEventListener(MouseEvent.CLICK, onClick);
 			addEventListener(Event.ENTER_FRAME, update);
 		}
