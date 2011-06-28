@@ -1,4 +1,4 @@
-package test.plugins.popups
+package test.view.containers
 {
 	import asunit.framework.TestCase;
 	import flash.display.Sprite;

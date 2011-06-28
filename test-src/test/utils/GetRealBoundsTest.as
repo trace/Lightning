@@ -1,9 +1,8 @@
-package test.plugins.utils {
+package test.utils {
 	import asunit.framework.TestCase;
 	import flash.display.Shape;
 	import flash.geom.Rectangle;
 	import za.co.skycorp.lightning.utils.getRealBounds;
-
 
 	/**
 	 * @author Chris Truter

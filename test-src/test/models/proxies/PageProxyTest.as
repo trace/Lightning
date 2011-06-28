@@ -1,4 +1,4 @@
-package test.plugins.pages {
+package test.models.proxies {
 	import asunit.framework.TestCase;
 	import test.stubs.PageID;
 	import test.stubs.PageStub;

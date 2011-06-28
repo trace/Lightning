@@ -1,4 +1,4 @@
-package test.plugins.pages {
+package test.view.containers {
 	import asunit.framework.TestCase;
 	import flash.display.Sprite;
 	import test.stubs.PageID;

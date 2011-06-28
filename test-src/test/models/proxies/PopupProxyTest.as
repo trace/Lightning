@@ -1,4 +1,4 @@
-package test.plugins.popups {
+package test.models.proxies {
 	import asunit.framework.TestCase;
 	import test.stubs.PopupFactoryStub;
 	import test.stubs.PopupID;

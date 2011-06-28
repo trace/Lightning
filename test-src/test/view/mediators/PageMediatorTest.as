@@ -1,25 +1,25 @@
-package test.plugins.popups {
+package test.view.mediators {
 	import asunit.framework.TestCase;
 	import flash.display.Sprite;
 	import org.robotlegs.adapters.SwiftSuspendersInjector;
 	import org.robotlegs.adapters.SwiftSuspendersReflector;
 	import org.robotlegs.base.MediatorMap;
 	import org.robotlegs.mvcs.Mediator;
-	import test.stubs.PopupStub;
-	import za.co.skycorp.lightning.controller.signals.PopupSignal;
-	import za.co.skycorp.lightning.view.interfaces.IPopup;
-	import za.co.skycorp.lightning.view.mediator.PopupMediator;
+	import test.stubs.PageStub;
+	import za.co.skycorp.lightning.controller.signals.PageSignal;
+	import za.co.skycorp.lightning.view.interfaces.IPage;
+	import za.co.skycorp.lightning.view.mediator.PageMediator;
 
 	/**
 	 * @author Chris Truter
 	 */
-	public class PopupMediatorTest extends TestCase
+	public class PageMediatorTest extends TestCase
 	{
-		private var popup:PopupStub;
-		private var mediator:PopupMediator;
+		private var page:PageStub;
+		private var mediator:PageMediator;
 		private var map:MediatorMap;
 		
-		public function PopupMediatorTest(method:String = null)
+		public function PageMediatorTest(method:String = null)
 		{
 			super(method);
 		}
@@ -28,12 +28,12 @@ package test.plugins.popups {
 		{
             super.setUp();
 			
-			popup = new PopupStub;
-			mediator = new PopupMediator;
+			page = new PageStub;
+			mediator = new PageMediator;
 			map = new MediatorMap(new Sprite, new SwiftSuspendersInjector, new SwiftSuspendersReflector);
 			
-			mediator.signal = new PopupSignal;
-			map.mapView(PopupStub, PopupMediator, IPopup);
+			mediator.signal = new PageSignal;
+			map.mapView(PageStub, PageMediator, IPage);
         }
 
         override protected function tearDown():void
@@ -43,7 +43,7 @@ package test.plugins.popups {
 			if (mediator.contextView)
 				mediator.preRemove();
 			
-			popup = null;
+			page = null;
 			mediator = null;
 			map = null;
 		}
@@ -55,8 +55,8 @@ package test.plugins.popups {
 		
 		public function testSignalPassed():void
 		{
-			map.registerMediator(popup, mediator);
-			assertTrue("PopupSignal is passed to the popup.", popup.popupSignal is PopupSignal);
+			map.registerMediator(page, mediator);
+			assertTrue("PageSignal is passed to the page.", page.pageSignal is PageSignal);
 		}
 	}
 }

@@ -15,19 +15,9 @@ package za.co.skycorp.lightning.model.enum
 			_value = value;
 		}
 
-		public function get value():String
-		{
-			return _value;
-		}
+		public function get value():String { return _value; }
+		public function set value(value:String):void { _value = value; }
 
-		public function set value(value:String):void
-		{
-			_value = value;
-		}
-
-		public function toString():String
-		{
-			return _value;
-		}
+		public function toString():String { return _value; }
 	}
 }

@@ -12,19 +12,9 @@ package za.co.skycorp.lightning.model.enum
 			_value = value;
 		}
 
-		public function get value():Boolean
-		{
-			return _value;
-		}
+		public function get value():Boolean { return _value; }
+		public function set value(value:Boolean):void { _value = value; }
 
-		public function set value(value:Boolean):void
-		{
-			_value = value;
-		}
-
-		public function toBoolean():Boolean
-		{
-			return _value;
-		}
+		public function toBoolean():Boolean { return _value; }
 	}
 }

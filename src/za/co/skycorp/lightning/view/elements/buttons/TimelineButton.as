@@ -5,24 +5,22 @@ package za.co.skycorp.lightning.view.elements.buttons
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import net.hires.debug.Logger;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
+	import za.co.skycorp.lightning.interfaces.IDestroyable;
 	import za.co.skycorp.lightning.model.enum.SoundAction;
 	import za.co.skycorp.lightning.model.enum.SoundID;
+	import za.co.skycorp.lightning.model.enum.TimelineButtonLabel;
 	import za.co.skycorp.lightning.model.vo.SoundVO;
+	import za.co.skycorp.lightning.utils.safelyRemoveChild;
 
 	/**
 	 * TODOM: rewrite this terrible awful class
 	 * @author Chris Truter
 	 */
-	public class TimelineButton extends Sprite
+	public class TimelineButton extends Sprite implements IDestroyable
 	{
-		// constants
-		private const LABEL_DISABLED:String = "_disabled_";
-		private const LABEL_DOWN:String = "_down_";
-		private const LABEL_OUT:String = "_out_";
-		private const LABEL_OVER:String = "_isOver";
-		private const LABEL_SELECTED:String = "_selected_";
 		// public
 		public var asset:MovieClip;
 		public var sound:Signal;
@@ -57,7 +55,7 @@ package za.co.skycorp.lightning.view.elements.buttons
 		public function get selected():Boolean { return _isSelected; }
 		/* Changes the selected state of the button */
 		public function set selected(newStatus:Boolean):void {
-			setSelected(newStatus);
+			if (_canSelect) setSelected(newStatus);
 		}
 		
 		public function get status():Boolean { return _isActive; }
@@ -65,15 +63,6 @@ package za.co.skycorp.lightning.view.elements.buttons
 		public function set status(newStatus:Boolean):void {
 			_isActive = newStatus;
 			_isActive ? activate() : deactivate();
-		}
-		
-		/**
-		 * Called when removed from stage.
-		 * @param	event:Event.REMOVED_FROM_STAGE
-		 */
-		public function destroy(evt:Event = null):void
-		{
-			deactivate();
 		}
 		
 		/**
@@ -100,7 +89,7 @@ package za.co.skycorp.lightning.view.elements.buttons
 		protected function handleDown(evt:MouseEvent):void
 		{
 			if (_isSelected) return;
-			if (_hasDownFrame) asset.gotoAndPlay(LABEL_DOWN);
+			if (_hasDownFrame) asset.gotoAndPlay(TimelineButtonLabel.LABEL_DOWN);
 		}
 		
 		protected function handleOver(evt:MouseEvent):void
@@ -111,20 +100,23 @@ package za.co.skycorp.lightning.view.elements.buttons
 			_isOver = true;
 			if (_isSelected) return;
 			if (sound) sound.dispatch(SoundAction.PLAY, new SoundVO(soundOverID));
-			asset.gotoAndPlay(LABEL_OVER);
+			asset.gotoAndPlay(TimelineButtonLabel.LABEL_OVER);
 		}
 		
 		protected function handleOut(evt:MouseEvent):void
 		{
 			_isOver = false;
 			if (_isSelected) return;
-			asset.gotoAndPlay(LABEL_OUT);
+			asset.gotoAndPlay(TimelineButtonLabel.LABEL_OUT);
 		}
 		
 		protected function wrap():void
 		{
 			if (asset.parent)
-				asset.parent.addChildAt(this, asset.parent.getChildIndex(asset));
+			{
+				var index:int = asset.parent.getChildIndex(asset)
+				asset.parent.addChildAt(this, index);
+			}
 			addChild(asset);
 			
 			asset.addFrameScript(0, asset.stop);
@@ -132,21 +124,33 @@ package za.co.skycorp.lightning.view.elements.buttons
 			
 			for each (var s:FrameLabel in asset.currentLabels)
 			{
-				if (s.name == LABEL_OUT)
-					_outFrame = s.frame;
-				if (s.name == LABEL_DOWN)
-					_hasDownFrame = true;
-				if (s.name == LABEL_SELECTED)
+				var isStopLabel:Boolean = true;
+				switch(s.name)
 				{
-					_selectedFrame = s.frame;
-					_canSelect = true;
+					case TimelineButtonLabel.LABEL_OUT:
+						_outFrame = s.frame;
+						break;
+					case TimelineButtonLabel.LABEL_DOWN:
+						_hasDownFrame = true;
+						break;
+					case TimelineButtonLabel.LABEL_SELECTED:
+						_selectedFrame = s.frame;
+						_canSelect = true;
+						break;
+					case TimelineButtonLabel.LABEL_DISABLED:
+						_canDisable = true;
+						asset.addFrameScript(s.frame - 3, asset.stop);
+						break;
+						
+					default:
+						// hmm, don't really care about extra labels, but log in case typo
+						// also deactivate stop
+						isStopLabel = false;
+						Logger.debug("unknown timeline button label: " + s.name);
 				}
-				if (s.name == LABEL_DISABLED)
-				{
-					_canDisable = true;
-					asset.addFrameScript(s.frame - 3, asset.stop);
-				}
-				asset.addFrameScript(s.frame - 2, asset.stop);
+				
+				if (isStopLabel)
+					asset.addFrameScript(s.frame - 2, asset.stop);
 			}
 			
 			mouseChildren = false;
@@ -156,19 +160,20 @@ package za.co.skycorp.lightning.view.elements.buttons
 			_isActive = true;
 			_isSelected = false;
 			
-			addEventListener(Event.ADDED_TO_STAGE, init);
-			
 			if (stage)
 				init(null);
-				
-			addEventListener(Event.REMOVED_FROM_STAGE, destroy);
+			
+			addEventListener(Event.ADDED_TO_STAGE, init);
+			addEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
 		}
 		
 		private function activate():void
 		{
-			_isDisabled = false;
-			if (_canDisable && _isDisabled)
-				asset.gotoAndStop(LABEL_OVER);
+			if (_isDisabled) // should probably just check mouse actually..
+			{
+				_isDisabled = false;
+				asset.gotoAndStop(TimelineButtonLabel.LABEL_OVER);
+			}
 				
 			alpha = 1;
 			mouseEnabled = true;
@@ -182,9 +187,11 @@ package za.co.skycorp.lightning.view.elements.buttons
 		
 		private function deactivate():void
 		{
-			_isDisabled = true;
 			if (_canDisable)
-				asset.gotoAndStop(LABEL_DISABLED);
+			{
+				_isDisabled = true;
+				asset.gotoAndStop(TimelineButtonLabel.LABEL_DISABLED);
+			}
 				
 			alpha = .8;
 			mouseEnabled = false;
@@ -196,16 +203,25 @@ package za.co.skycorp.lightning.view.elements.buttons
 			removeEventListener(MouseEvent.ROLL_OUT, handleOut);
 		}
 		
+		private function handleRemovedFromStage(evt:Event = null):void
+		{
+			deactivate();
+		}
+		
 		private function handleScrubBack(e:Event):void
 		{
-			asset.gotoAndStop(asset.currentFrame - 1);
-			if (asset.currentFrame == _targetFrame)
+			if (asset.currentFrame != _targetFrame && asset.currentFrame > 1)
 			{
+				asset.gotoAndStop(asset.currentFrame - 1);
+			}
+			else
+			{
+				// here for safety if just played back past start
+				asset.gotoAndStop(_targetFrame);
 				removeEventListener(Event.ENTER_FRAME, handleScrubBack);
+				// jump frames to simplify later logic, if on "deselect to off" frame
 				if (_targetFrame == _selectedFrame)
 					asset.gotoAndStop(_outFrame - 1);
-				else
-					asset.gotoAndStop(_targetFrame);
 			}
 		}
 		
@@ -233,18 +249,32 @@ package za.co.skycorp.lightning.view.elements.buttons
 			switch (_isSelected)
 			{
 				case true:
-					if (asset.currentLabel != LABEL_SELECTED)
-						asset.gotoAndPlay(LABEL_SELECTED);
-					else
-						asset.gotoAndPlay(_selectedFrame);
+					asset.gotoAndPlay(_selectedFrame);
 					break;
 				case false:
-					if (_isOver)
+					// hmm not sure about this either.. remove and test on live assets
+					//if (_isOver)
 						playSelectedBackwards();
-					else
-						asset.gotoAndPlay(LABEL_OUT);
+					//else
+						//asset.gotoAndPlay(TimelineButtonLabel.LABEL_OUT);
 					break;
 			}
+		}
+		
+		public function destroy():void
+		{
+			deactivate();
+			
+			asset = null;
+			soundClickID = null;
+			soundOverID = null;
+			_onClick = null;
+			
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+			removeEventListener(Event.REMOVED_FROM_STAGE, handleRemovedFromStage);
+			
+			safelyRemoveChild(asset);
+			safelyRemoveChild(this);
 		}
 	}
 }

@@ -1,10 +1,12 @@
-package test.plugins.pages
+package test.view.containers
 {
 	import asunit.framework.TestCase;
 	import test.stubs.PageID;
 	import test.stubs.PageStub;
 	import za.co.skycorp.lightning.view.containers.SlidingPageContainer;
 	/**
+	 * TODO: unit tests
+	 *
 	 * @author Chris Truter
 	 */
 	public class SlidingPageContainerTest extends TestCase
