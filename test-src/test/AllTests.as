@@ -1,4 +1,4 @@
-package
+package test
 {
 	import asunit.framework.TestSuite;
 	import test.models.factories.BasicFactoryTest;

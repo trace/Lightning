@@ -4,6 +4,7 @@ package test.view.elements.buttons
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.events.MouseEvent;
+	import test.Main;
 	import za.co.skycorp.lightning.view.elements.buttons.TimelineButton;
 	/**
 	 * TODO: lots more cases to test..
@@ -66,7 +67,7 @@ package test.view.elements.buttons
 		
 		public function test_remember_state_off_stage():void
 		{
-			var _stage:Stage = LightningTests.STAGE;
+			var _stage:Stage = Main.STAGE;
 			_stage.addChild(_button);
 			_button.status = false;
 			_stage.removeChild(_button);
@@ -81,7 +82,7 @@ package test.view.elements.buttons
 		
 		public function test_disabled_off_stage():void
 		{
-			var _stage:Stage = LightningTests.STAGE;
+			var _stage:Stage = Main.STAGE;
 			_stage.addChild(_button);
 			_button.status = true;
 			_stage.removeChild(_button);
