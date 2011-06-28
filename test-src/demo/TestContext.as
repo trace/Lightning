@@ -44,6 +44,8 @@ package demo
 		{
 			for each (var id:StringEnum in container.ids)
 				openPage(id);
+				
+			openPage(container.ids[0]);
 		}
 	}
 }
