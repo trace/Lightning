@@ -116,12 +116,9 @@ package za.co.skycorp.lightning.model.proxies
 		
 		public function toggleMute():void
 		{
-			trace("toggle1", _isMuted);
-			trace("toggle2", _isMuted);
 			// SoundMixer.stopAll();
 			_isMuted = !_isMuted;
 			_loop.isMuted = _isMuted;
-			trace("toggle3", _isMuted);
 			
 			if (_isMuted)
 				stopSound();
