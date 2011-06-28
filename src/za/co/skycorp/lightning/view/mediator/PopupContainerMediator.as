@@ -8,26 +8,22 @@ package za.co.skycorp.lightning.view.mediator
 	import za.co.skycorp.lightning.view.containers.PopupContainer;
 	import za.co.skycorp.lightning.view.interfaces.IPopup;
 
-
 	/**
 	 * @author Chris Truter
 	 */
 	public class PopupContainerMediator extends SignalMediator
 	{
-		[Inject]
-		public var view:PopupContainer;
-		[Inject]
-		public var proxy:PopupProxy;
-		[Inject]
-		public var signal:PopupSignal;
-
+		[Inject] public var view:PopupContainer;
+		[Inject] public var proxy:PopupProxy;
+		[Inject] public var signal:PopupSignal;
+		
 		override public function onRegister():void
 		{
 			addToSignal(signal, handleSignal);
 			if (view.stage)
 				view.resize(view.stage.stageWidth, view.stage.stageHeight);
 		}
-
+		
 		override public function onRemove():void
 		{
 			super.onRemove();
@@ -35,7 +31,7 @@ package za.co.skycorp.lightning.view.mediator
 			view = null;
 			proxy = null;
 		}
-
+		
 		private function handleSignal(action:PopupAction, vo:PopupVO):void
 		{
 			switch (action)

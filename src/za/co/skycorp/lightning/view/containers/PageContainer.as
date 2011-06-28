@@ -4,7 +4,6 @@ package za.co.skycorp.lightning.view.containers
 	import za.co.skycorp.lightning.model.enum.StringEnum;
 	import za.co.skycorp.lightning.view.interfaces.IPage;
 
-
 	/**
 	 * @author Chris Truter
 	 */
@@ -13,25 +12,18 @@ package za.co.skycorp.lightning.view.containers
 		protected var _page:IPage;
 		private var _queue:Vector.<IPage>;
 		private var _isClosing:Boolean;
-
+		
 		public function PageContainer()
 		{
 			_queue = new Vector.<IPage>;
 		}
-
+		
 		/**
 		 * Currently opening, open, or closing page.
 		 */
-		public function get page():IPage
-		{
-			return _page;
-		}
-
-		public function get queueLength():int
-		{
-			return _queue.length;
-		}
-
+		public function get page():IPage { return _page; }
+		public function get queueLength():int {	return _queue.length; }
+		
 		/**
 		 * Activates the current page.
 		 * Immediately closes and cueues opening next page, if queue exists.
@@ -42,15 +34,15 @@ package za.co.skycorp.lightning.view.containers
 		{
 			if (!_page || id != _page.id)
 				return false;
-
+				
 			if (_queue.length > 0)
 				removePage(id);
 			else
 				_page.activate();
-
+				
 			return true;
 		}
-
+		
 		/**
 		 * Open page, unless another is open. If another is open, close it, and add this page to the queue to open.
 		 * If this is the currently open page, ignore.
@@ -62,7 +54,7 @@ package za.co.skycorp.lightning.view.containers
 			if (_page)
 				if (newPage.id == _page.id)
 					return false;
-
+					
 			if (_page)
 			{
 				_queue.push(newPage);
@@ -87,7 +79,7 @@ package za.co.skycorp.lightning.view.containers
 			newPage.onOpened.addOnce(handlePageOpened);
 			newPage.open();
 		}
-
+		
 		/**
 		 * If page is open, and matches id, close it.
 		 * @param	page
@@ -108,7 +100,7 @@ package za.co.skycorp.lightning.view.containers
 			}
 			return false;
 		}
-
+		
 		/**
 		 * Remove page from display list and deactive, if currently active and a child of the container.
 		 * If queue, open next element.
@@ -121,12 +113,12 @@ package za.co.skycorp.lightning.view.containers
 				return false;
 				
 			_isClosing = false;
-
+			
 			removePageFinally();
-
+			
 			if (_queue.length > 0)
 				openPage(_queue.shift());
-
+				
 			return true;
 		}
 		

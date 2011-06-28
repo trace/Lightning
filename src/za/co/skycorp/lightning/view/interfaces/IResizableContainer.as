@@ -8,7 +8,6 @@ package za.co.skycorp.lightning.view.interfaces
 	public interface IResizableContainer extends IResizable, IEventDispatcher, ISprite
 	{
 		function get sizedHeight():Number;
-
 		function get sizedWidth():Number;
 	}
 }

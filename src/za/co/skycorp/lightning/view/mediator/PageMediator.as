@@ -13,17 +13,14 @@ package za.co.skycorp.lightning.view.mediator
 		[Inject] public var signal:PageSignal;
 		[Inject] public var sound:SoundSignal;
 		
-		protected function get page():IPage
-		{
-			return viewComponent as IPage;
-		}
-
+		protected function get page():IPage { return viewComponent as IPage; }
+		
 		override public function onRegister():void
 		{
 			page.pageSignal = signal;
 			page.sound = sound;
 		}
-
+		
 		override public function onRemove():void
 		{
 			page.pageSignal = null;

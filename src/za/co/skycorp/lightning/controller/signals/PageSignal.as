@@ -5,7 +5,6 @@ package za.co.skycorp.lightning.controller.signals
 	import za.co.skycorp.lightning.model.enum.StringEnum;
 	import za.co.skycorp.lightning.model.vo.PageVO;
 
-
 	/**
 	 * @author Chris Truter
 	 */

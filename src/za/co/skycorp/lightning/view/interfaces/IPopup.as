@@ -9,7 +9,7 @@ package za.co.skycorp.lightning.view.interfaces
 	public interface IPopup extends IOpenable, IIdentifiable, ISprite
 	{
 		function get popupSignal():PopupSignal;
-
+		
 		function set popupSignal(value:PopupSignal):void;
 
 		function get sound():SoundSignal;
