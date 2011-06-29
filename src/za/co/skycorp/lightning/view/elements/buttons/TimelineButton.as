@@ -245,16 +245,19 @@ package za.co.skycorp.lightning.view.elements.buttons
 		private function setSelected(newStatus:Boolean):void
 		{
 			if (_isSelected == newStatus || !_canSelect) return;
+			
 			_isSelected = newStatus;
 			switch (_isSelected)
 			{
 				case true:
-					asset.gotoAndPlay(_selectedFrame);
+					asset.gotoAndStop(_selectedFrame);
 					break;
 				case false:
+					asset.gotoAndPlay(_outFrame);
+				
 					// hmm not sure about this either.. remove and test on live assets
 					//if (_isOver)
-						playSelectedBackwards();
+						//playSelectedBackwards();
 					//else
 						//asset.gotoAndPlay(TimelineButtonLabel.LABEL_OUT);
 					break;

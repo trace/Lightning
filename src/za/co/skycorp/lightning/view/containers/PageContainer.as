@@ -34,7 +34,7 @@ package za.co.skycorp.lightning.view.containers
 		{
 			if (!_page || id != _page.id)
 				return false;
-				
+		
 			if (_queue.length > 0)
 				removePage(id);
 			else
@@ -57,6 +57,11 @@ package za.co.skycorp.lightning.view.containers
 					
 			if (_page)
 			{
+				for (var i:int = 0; i < _queue.length; i++)
+				{
+					if (_queue[i].id == newPage.id)
+						return false;
+				}
 				_queue.push(newPage);
 				closePage(_page.id);
 				return true;
@@ -124,7 +129,7 @@ package za.co.skycorp.lightning.view.containers
 		
 		protected function removePageFinally():void
 		{
-			if ((_page.display.parent == this))
+			if (_page && (_page.display.parent == this))
 			{
 				removeChild(_page.display);
 				//_page.destroy();
@@ -134,12 +139,12 @@ package za.co.skycorp.lightning.view.containers
 		
 		protected function handlePageOpened():void
 		{
-			activatePage(page.id);
+			activatePage(_page.id);
 		}
 		
 		private function handlePageClosed():void
 		{
-			removePage(page.id);
+			removePage(_page.id);
 		}
 	}
 }
